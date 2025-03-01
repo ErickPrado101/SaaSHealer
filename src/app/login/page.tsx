@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import GlassmorphismCard from "../components/glassmorphism-card"
+import GlassmorphismCard from "../components/GlassmorphismCard"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -62,7 +62,7 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="w-full bg-white text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-white/90 transition-colors"
+                className="w-full bg-white text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-white/90 transition-colors rounded"
               >
                 Entrar
               </button>

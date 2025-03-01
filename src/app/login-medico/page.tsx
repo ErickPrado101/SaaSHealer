@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import GlassmorphismCard from "../components/glassmorphism-card"
+import GlassmorphismCard from "../components/GlassmorphismCard"
 
 export default function LoginMedico() {
   const [email, setEmail] = useState("")

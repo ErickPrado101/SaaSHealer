@@ -1,4 +1,4 @@
-import GlassmorphismCard from "./glassmorphism-card"
+import GlassmorphismCard from "./GlassmorphismCard"
 import { MonitorSmartphone, Shield, Clock } from "lucide-react"
 
 const features = [
