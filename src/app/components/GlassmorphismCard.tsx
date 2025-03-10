@@ -1,12 +1,13 @@
-import { type ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface GlassmorphismCardProps {
   children: ReactNode;
+  className?: string;
 }
 
-const GlassmorphismCard: React.FC<GlassmorphismCardProps> = ({ children }) => {
+const GlassmorphismCard: React.FC<GlassmorphismCardProps> = ({ children, className = "" }) => {
   return (
-    <div className="backdrop-blur-md bg-white bg-opacity-10 rounded-3xl p-8 shadow-lg border border-white border-opacity-20 transition-all hover:shadow-xl">
+    <div className={`bg-white rounded-2xl p-8 shadow-md border border-gray-200 transition hover:shadow-lg ${className}`}>
       {children}
     </div>
   );

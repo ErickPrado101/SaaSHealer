@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import GlassmorphismCard from "../components/GlassmorphismCard"; //nomenclatura
+import GlassmorphismCard from "../components/GlassmorphismCard";
 
 export default function Cadastro() {
   const [email, setEmail] = useState("");
@@ -18,15 +18,18 @@ export default function Cadastro() {
           <GlassmorphismCard>
             {/* Título e descrição dentro do card */}
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-white mb-2">Criar Conta</h1>
-              <p className="text-white/80">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Criar Conta</h1>
+              <p className="text-gray-700">
                 Comece sua jornada com o SaaSHealer
               </p>
             </div>
 
             <form className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   Email
                 </label>
                 <input
@@ -35,13 +38,16 @@ export default function Cadastro() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seu@email.com"
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="senha" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="senha"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   Senha
                 </label>
                 <input
@@ -50,13 +56,16 @@ export default function Cadastro() {
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
                   placeholder="Digite sua senha"
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="cpf" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="cpf"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   CPF
                 </label>
                 <input
@@ -65,13 +74,16 @@ export default function Cadastro() {
                   value={cpf}
                   onChange={(e) => setCpf(e.target.value)}
                   placeholder="000.000.000-00"
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="dataNascimento" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="dataNascimento"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   Data de Nascimento
                 </label>
                 <input
@@ -79,13 +91,16 @@ export default function Cadastro() {
                   id="dataNascimento"
                   value={dataNascimento}
                   onChange={(e) => setDataNascimento(e.target.value)}
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="telefone" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="telefone"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   Telefone
                 </label>
                 <input
@@ -94,40 +109,43 @@ export default function Cadastro() {
                   value={telefone}
                   onChange={(e) => setTelefone(e.target.value)}
                   placeholder="(00) 00000-0000"
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="genero" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="genero"
+                  className="block text-sm font-medium text-gray-900 mb-1"
+                >
                   Gênero
                 </label>
                 <select
                   id="genero"
                   value={genero}
                   onChange={(e) => setGenero(e.target.value)}
-                  className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
                   required
                 >
-                  <option value="" className="text-blue-600">Selecione</option>
-                  <option value="masculino" className="text-blue-600">Masculino</option>
-                  <option value="feminino" className="text-blue-600">Feminino</option>
-                  <option value="outro" className="text-blue-600">Outro</option>
+                  <option value="">Selecione</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
+                  <option value="outro">Outro</option>
                 </select>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-white/90 transition-colors"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
               >
                 Cadastrar
               </button>
             </form>
 
-            <p className="mt-6 text-center text-white/80">
+            <p className="mt-6 text-center text-gray-700">
               Já tem uma conta?{" "}
-              <Link href="/login" className="text-white hover:text-white/90 underline">
+              <Link href="/login" className="text-blue-600 hover:underline">
                 Faça login
               </Link>
             </p>

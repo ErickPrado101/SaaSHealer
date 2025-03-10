@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Chat from "@/app/components/Chat";
 import { MessageCircle } from "lucide-react";
+import GlassmorphismCard from "@/app/components/GlassmorphismCard";
 
 // Importações do Chart.js e react-chartjs-2
 import { Bar } from "react-chartjs-2";
@@ -32,6 +33,10 @@ export default function AdminDashboard() {
     { id: 2, name: "Dra. Maria Santos", specialty: "Pediatria" },
   ]);
 
+  // Estados para o modal de médicos
+  const [showDoctorModal, setShowDoctorModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"new" | "edit">("new");
+  const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
   const [newDoctorName, setNewDoctorName] = useState("");
   const [newDoctorSpecialty, setNewDoctorSpecialty] = useState("");
 
@@ -52,11 +57,10 @@ export default function AdminDashboard() {
     ],
   };
 
-  // Opções do gráfico
   const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
-      legend: { position: "top" as const },
+      legend: { position: "top" },
       title: {
         display: true,
         text: "Atendimentos por Dia",
@@ -64,23 +68,47 @@ export default function AdminDashboard() {
     },
   };
 
-  // Função para adicionar um novo médico
-  const handleAddDoctor = (e: React.FormEvent) => {
+  // Handlers para abertura do modal (novo/edição)
+  const handleNewDoctor = () => {
+    setModalMode("new");
+    setCurrentDoctor(null);
+    setNewDoctorName("");
+    setNewDoctorSpecialty("");
+    setShowDoctorModal(true);
+  };
+
+  const handleEditDoctor = (doctor: Doctor) => {
+    setModalMode("edit");
+    setCurrentDoctor(doctor);
+    setNewDoctorName(doctor.name);
+    setNewDoctorSpecialty(doctor.specialty);
+    setShowDoctorModal(true);
+  };
+
+  const handleDoctorModalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newDoctorName.trim() && newDoctorSpecialty.trim()) {
-      const newId = doctors.length > 0 ? Math.max(...doctors.map((d) => d.id)) + 1 : 1;
-      const newDoctor: Doctor = {
-        id: newId,
-        name: newDoctorName,
-        specialty: newDoctorSpecialty,
-      };
-      setDoctors((prev) => [...prev, newDoctor]);
-      setNewDoctorName("");
-      setNewDoctorSpecialty("");
+      if (modalMode === "new") {
+        const newId = doctors.length > 0 ? Math.max(...doctors.map((d) => d.id)) + 1 : 1;
+        const newDoctor: Doctor = {
+          id: newId,
+          name: newDoctorName,
+          specialty: newDoctorSpecialty,
+        };
+        setDoctors((prev) => [...prev, newDoctor]);
+      } else if (modalMode === "edit" && currentDoctor) {
+        setDoctors((prev) =>
+          prev.map((doc) =>
+            doc.id === currentDoctor.id
+              ? { ...doc, name: newDoctorName, specialty: newDoctorSpecialty }
+              : doc
+          )
+        );
+      }
+      setShowDoctorModal(false);
     }
   };
 
-  // Função para excluir um médico
   const handleDeleteDoctor = (id: number) => {
     setDoctors((prev) => prev.filter((doc) => doc.id !== id));
   };
@@ -94,79 +122,72 @@ export default function AdminDashboard() {
           className="bg-blue-600 text-white px-4 py-2 rounded"
           onClick={() => setShowDoctors(!showDoctors)}
         >
-          Ver Médicos
+          {showDoctors ? "Ocultar Médicos" : "Ver Médicos"}
         </button>
       </div>
 
       {/* Card de Médicos */}
       {showDoctors && (
-        <div className="mb-8 bg-blue-950 backdrop-blur-xl rounded-2xl p-6 shadow-2xl text-white">
-          <h2 className="text-2xl font-bold mb-4">Médicos</h2>
+        <GlassmorphismCard className="mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">Médicos</h2>
+            <button
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              onClick={handleNewDoctor}
+            >
+              Adicionar Médico
+            </button>
+          </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-700">
-              <thead>
-                <tr className="bg-blue-900">
-                  <th className="px-4 py-2 text-left">Nome</th>
-                  <th className="px-4 py-2 text-left">Especialidade</th>
-                  <th className="px-4 py-2 text-left">Ações</th>
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-4 py-2 text-left font-semibold text-gray-900">Nome</th>
+                  <th className="px-4 py-2 text-left font-semibold text-gray-900">Especialidade</th>
+                  <th className="px-4 py-2 text-left font-semibold text-gray-900">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-700">
+              <tbody className="divide-y divide-gray-200">
                 {doctors.map((doctor) => (
-                  <tr key={doctor.id}>
-                    <td className="px-4 py-2">{doctor.name}</td>
-                    <td className="px-4 py-2">{doctor.specialty}</td>
+                  <tr key={doctor.id} className="bg-white">
+                    <td className="px-4 py-2 text-gray-900">{doctor.name}</td>
+                    <td className="px-4 py-2 text-gray-900">{doctor.specialty}</td>
                     <td className="px-4 py-2">
-                      <button
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                        onClick={() => handleDeleteDoctor(doctor.id)}
-                      >
-                        Excluir
-                      </button>
+                      <div className="flex space-x-2">
+                        <button
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition-colors"
+                          onClick={() => handleEditDoctor(doctor)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+                          onClick={() => handleDeleteDoctor(doctor.id)}
+                        >
+                          Excluir
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <form onSubmit={handleAddDoctor} className="mt-4 flex flex-col space-y-2">
-            <input
-              type="text"
-              placeholder="Nome do Médico"
-              value={newDoctorName}
-              onChange={(e) => setNewDoctorName(e.target.value)}
-              className="p-2 rounded border border-gray-700 bg-blue-900 text-white"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Especialidade"
-              value={newDoctorSpecialty}
-              onChange={(e) => setNewDoctorSpecialty(e.target.value)}
-              className="p-2 rounded border border-gray-700 bg-blue-900 text-white"
-              required
-            />
-            <button
-              type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-            >
-              Adicionar Médico
-            </button>
-          </form>
-        </div>
+        </GlassmorphismCard>
       )}
 
       {/* Card do Gráfico */}
-      <div className="mb-8 bg-blue-950 backdrop-blur-xl rounded-2xl p-6 shadow-2xl text-white">
-        <h2 className="text-2xl font-bold mb-4">Desempenho dos Médicos</h2>
+      <GlassmorphismCard className="mb-8">
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">Desempenho dos Médicos</h2>
         <Bar data={data} options={options} />
-      </div>
+      </GlassmorphismCard>
 
       {/* Botão flutuante do Chat */}
-      <div className="fixed bottom-4 right-4">
+      <div className="fixed bottom-4 right-4 z-40">
         <button
           className="bg-blue-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition"
           onClick={() => setShowChat(!showChat)}
+          aria-label="Abrir chat"
         >
           <MessageCircle size={24} />
         </button>
@@ -174,14 +195,65 @@ export default function AdminDashboard() {
 
       {/* Popup do Chat */}
       {showChat && (
-        <div className="fixed bottom-16 right-4 bg-white border rounded-lg shadow-lg w-80 p-4">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-bold">Chat</h2>
-            <button className="text-red-500" onClick={() => setShowChat(false)}>
+        <div className="fixed bottom-20 right-4 z-50 bg-white border border-gray-300 rounded-lg shadow-2xl w-80 p-4">
+          <div className="flex justify-between items-center mb-2 border-b pb-2">
+            <h2 className="text-lg font-bold text-gray-900">Chat</h2>
+            <button className="text-gray-500 hover:text-gray-700" onClick={() => setShowChat(false)}>
               X
             </button>
           </div>
           <Chat usuario="admin" />
+        </div>
+      )}
+
+      {/* Modal para Adicionar/Editar Médico */}
+      {showDoctorModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <h2 className="text-xl font-bold text-gray-900">
+                {modalMode === "new" ? "Adicionar Médico" : "Editar Médico"}
+              </h2>
+              <button
+                className="text-gray-500 hover:text-gray-700"
+                onClick={() => setShowDoctorModal(false)}
+              >
+                X
+              </button>
+            </div>
+            <form onSubmit={handleDoctorModalSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-1">
+                  Nome do Médico
+                </label>
+                <input
+                  type="text"
+                  value={newDoctorName}
+                  onChange={(e) => setNewDoctorName(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-50 text-gray-900 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-1">
+                  Especialidade
+                </label>
+                <input
+                  type="text"
+                  value={newDoctorSpecialty}
+                  onChange={(e) => setNewDoctorSpecialty(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-50 text-gray-900 border border-gray-300 rounded"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white border border-blue-600 py-2 rounded font-semibold hover:bg-blue-700 transition"
+              >
+                {modalMode === "new" ? "Adicionar Médico" : "Salvar Alterações"}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

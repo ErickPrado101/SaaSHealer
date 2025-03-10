@@ -60,7 +60,7 @@ export default function Chat({ usuario }: ChatProps) {
               key={index}
               className={`max-w-xs p-2 rounded-lg break-words transition-all ${
                 msg.remetente === usuario
-                  ? "bg-blue-500 text-white self-end"
+                  ? "bg-blue-500 text-black self-end"
                   : "bg-gray-300 text-gray-900 self-start"
               }`}
             >
@@ -83,7 +83,7 @@ export default function Chat({ usuario }: ChatProps) {
           className="flex-1 border border-gray-300 rounded-l-lg p-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
-          className="bg-blue-600 text-white px-1 py-2 rounded-r-lg hover:bg-blue-700 transition"
+          className="bg-blue-600 text-black px-1 py-2 rounded-r-lg hover:bg-blue-700 transition"
           onClick={enviarMensagem}
         >
           Enviar

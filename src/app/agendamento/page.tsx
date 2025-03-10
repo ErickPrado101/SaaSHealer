@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import GlassmorphismCard from "../components/GlassmorphismCard";
 
@@ -23,9 +22,7 @@ export default function Agendamento() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aqui você implementaria a lógica para enviar os dados do agendamento
     alert("Agendamento realizado com sucesso!");
-    // Limpar o formulário
     setSelectedDoctor("");
     setDate("");
     setTime("");
@@ -34,16 +31,16 @@ export default function Agendamento() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[var(--background-start)] to-[var(--background-end)] px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-8">
       <GlassmorphismCard>
-        <h1 className="text-3xl font-bold mb-8 text-white text-center">
+        <h1 className="text-3xl font-bold mb-8 text-gray-900 text-center">
           Agendar Consulta
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="doctor"
-              className="block text-white text-sm font-semibold mb-1"
+              className="block text-gray-900 text-sm font-semibold mb-1"
             >
               Médico
             </label>
@@ -51,7 +48,7 @@ export default function Agendamento() {
               id="doctor"
               value={selectedDoctor}
               onChange={(e) => setSelectedDoctor(e.target.value)}
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             >
               <option value="">Selecione um médico</option>
@@ -65,7 +62,7 @@ export default function Agendamento() {
           <div>
             <label
               htmlFor="date"
-              className="block text-white text-sm font-semibold mb-1"
+              className="block text-gray-900 text-sm font-semibold mb-1"
             >
               Data
             </label>
@@ -74,14 +71,14 @@ export default function Agendamento() {
               id="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
           <div>
             <label
               htmlFor="time"
-              className="block text-white text-sm font-semibold mb-1"
+              className="block text-gray-900 text-sm font-semibold mb-1"
             >
               Horário
             </label>
@@ -90,14 +87,14 @@ export default function Agendamento() {
               id="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
           <div>
             <label
               htmlFor="name"
-              className="block text-white text-sm font-semibold mb-1"
+              className="block text-gray-900 text-sm font-semibold mb-1"
             >
               Nome
             </label>
@@ -107,14 +104,14 @@ export default function Agendamento() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Seu nome completo"
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-white text-sm font-semibold mb-1"
+              className="block text-gray-900 text-sm font-semibold mb-1"
             >
               Email
             </label>
@@ -124,7 +121,7 @@ export default function Agendamento() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
